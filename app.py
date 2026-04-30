@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# Load the model
+
 model = pickle.load(open('diabetes_prediction_model.pkl', 'rb'))
 
 def categorize_bmi(bmi):
@@ -17,7 +17,7 @@ def clamp(val, min_val, max_val):
     return max(min(val, max_val), min_val)
 
 def predict_diabetes(pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, dpf, age, bmi_cat_manual):
-    # Clamping based on exact dataset min/max values
+    
     pregnancies = clamp(pregnancies, 0, 17)
     glucose = clamp(glucose, 0, 199)
     blood_pressure = clamp(blood_pressure, 0, 130.0)
@@ -53,10 +53,10 @@ def predict_diabetes(pregnancies, glucose, blood_pressure, skin_thickness, insul
 interface = gr.Interface(
     fn=predict_diabetes,
     inputs=[
-        # Dropdown goes up to 17 (dataset max)
+        
         gr.Dropdown(choices=list(range(0, 18)), value=0, label="Pregnancies"),
 
-        # Sliders mapped to dataset min and max. Values default near the dataset median.
+        
         gr.Slider(0, 199, value=117, step=1, label="Glucose (mg/dL)"),
         gr.Slider(0, 130, value=72, step=1, label="Blood Pressure (mm Hg)"),
         gr.Slider(0, 100.0, value=23, step=1, label="Skin Thickness (mm)"),
